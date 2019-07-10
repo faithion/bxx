@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+
+<mapper namespace="com.bxx.dao.ProductDao">
+	<select id="selectAll" resultType="com.bxx.bean.Product">
+		select * from product;
+	</select>
+	<resultMap type="com.bxx.bean.Product" id="product">
+		<id property="id" column="id" />
+		<result property="no" column="no" />
+		<result property="name" column="name" />
+		<result property="price" column="price" />
+		<result property="photo" column="photo" />
+		<result property="inventory" column="inventory" />
+		<result property="sales" column="sales" />
+		<association property="specification" javaType="com.bxx.bean.Specification">
+			<id column="specification_id" property="id" />
+			<result column="sno1" property="no" />
+			<result column="cailiao" property="cailiao"></result>
+		<result column="guige" property="guige"></result>
+		<result column="color" property="color"></result>	
+		<result column="pinpai" property="pinpai"></result>
+		<result column="shiheage" property="shiheage"></result>
+		<result column="producer" property="producer"></result>
+		<result column="shelf_life" property="shelf_life"></result>
+		<result column="shangshitime" property="shangshitime"></result>
+		<result column="weight" property="weight"></result>
+		<result column="gongneng" property="gongneng"></result>
+		<result column="others" property="others"></result>
+		</association>
+		<collection property="comments"
+			ofType="com.bxx.bean.Comment">
+			<id column="cid" property="id" />
+			<result column="cno" property="no" />
+		</collection>
+		<collection property="sharings"
+			ofType="com.bxx.bean.Sharing">
+			<id column="sid" property="id" />
+			<result column="sno2" property="no" />
+		</collection>
+	</resultMap>
+
+	<select id="selectById" resultMap="product"> 
+		select *,sharing.id sid,comment.id cid,specification.no sno1,sharing.no sno2,comment.no cno from 
+		((product left join comment on product.id=comment.product_id) 
+		left join specification on specification.id=product.specification_id )
+		left join sharing on sharing.product_id = product.id
+		where product.id=#{id}; 
+		 
+	</select>
+
+	<select id="selectByNo" resultMap="product"> 
+		select *,sharing.id sid,comment.id cid,specification.no sno1,sharing.no sno2,comment.no cno from 
+		((product left join comment on product.id=comment.product_id) 
+		left join specification on specification.id=product.specification_id )
+		left join sharing on sharing.product_id = product.id
+		where product.no=#{no};
+	</select>
+
+	<select id="selectByClassify" resultType="com.bxx.bean.Product">
+		select * from product where classify=#{classify};
+	</select>
+	
+	<delete id="delete"> 
+		delete from product where id=#{id}; 
+	</delete>
+
+	<insert id="insert"> insert into
+		product(no,name,price,photo,inventory,sales,specification_id)
+		values(#{product.no},#{product.name},#{product.price},#{product.photo},#{product.inventory},#{product.sales},#{product.specification.id});
+	</insert>
+
+	<update id="update"> update product set
+		no=#{product.no},name=#{product.name},price=#{product.price},photo=#{product.photo},inventory=#{product.inventory},sales=#{product.sales},specification_id=#{product.specification.id}
+		where id=#{product.id};
+	</update>
+	<update id="u"> 
+	update product set
+		no=#{no},name=#{name},price=#{price},photo=#{photo},inventory=#{inventory},specification_id=#{specification_id},classify=#{classify}
+		where id=#{id};
+	</update>
+	
+
+
+</mapper>

@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bxx.dao.UserSharingDao">
+
+	<select id="selectAll" resultType="com.bxx.bean.UserSharing">
+		select id,user_id userId,sharing_id sharingId from user_sharing;
+	</select>
+	
+	<select id="selectById" resultType="com.bxx.bean.UserSharing">
+		select id,user_id userId,sharing_id sharingId from user_sharing
+		where id=#{id}
+	</select>
+	<delete id="delete">
+		delete from user_sharing where
+		sharing_id=#{sharingId};
+	</delete>
+	<insert id="insert">
+		insert into
+		user_sharing(user_id,sharing_id)
+		values(#{us.userId},#{us.sharingId});
+	</insert>
+
+</mapper>

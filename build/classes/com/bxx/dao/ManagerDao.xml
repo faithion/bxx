@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.bxx.dao.ManagerDao">
+
+	<select id="selectAll" resultType="com.bxx.bean.Manager">
+		select * from manager;
+	</select>
+	<resultMap type="com.bxx.bean.Manager" id="manager">
+		<id column="id" property="id"></id>
+		<result column="no" property="no"></result>	
+		<result column="password" property="password"/>
+	</resultMap>
+	<select id="selectById" resultMap="manager">
+		select * from manager
+		where  id=#{id};
+	</select>
+	<select id="selectByNo" resultMap="manager">
+		select * from manager
+		where  no=#{no};
+	</select>
+	<delete id="delete">
+		delete from manager where id=#{id};
+	</delete>
+	<insert id="insert">
+		insert into
+		manager(no,password)
+		values(#{no},#{password});
+		
+	</insert>
+	<update id="update">
+		update manager set
+		no=#{no},password=#{password}
+		where id=#{id};
+	</update>
+</mapper>

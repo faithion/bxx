@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    <mapper namespace="com.bxx.dao.OderformDao">
+
+	<select id="selectAll" resultType="com.bxx.bean.Oderform">
+		select * from oderform;
+	</select>
+	
+	<resultMap type="com.bxx.bean.Oderform" id="oderform">
+		<id column="id" property="id"></id>
+		<result column="id" property="id"></result>
+		<result column="no" property="no"></result>
+		<result column="date" property="date"></result>
+		<result column="quantity" property="quantity"></result>
+		<result column="status" property="status"></result>
+		<result column="total" property="total"/>
+		<association property="product" javaType="com.bxx.bean.Product">
+			<id column="product_id" property="id"></id>
+			<result column="product_no" property="no"></result>
+			<result column="product_name" property="name"/>
+			<result column="product_price" property="price"/>
+			<result column="product_photo" property="photo"/>
+		</association>
+		<association property="user" javaType="com.bxx.bean.User">
+			<id column="user_id" property="id"></id>
+			<result column="user_no" property="no"></result>
+		</association>
+		<association property="sharing" javaType="com.bxx.bean.Sharing">
+			<id column="sharing_id" property="id"></id>
+			<result column="sharing_no" property="no"></result>
+			<result column="sharing_uleft" property="uleft"></result>
+			<result column="sharing_discount" property="discount"></result>
+		</association>
+	</resultMap>
+	<select id="selectById" resultMap="oderform">
+		select *,product.no product_no,user.no user_no,sharing.no sharing_no from
+		((oderform left join user on oderform.user_id=user.id)
+		left join product on oderform.product_id=product.id)
+		left join sharing on oderform.sharing_id=sharing.id
+		where oderform.id=#{id};
+	</select>
+	<select id="selectByNo" resultMap="oderform">
+		select *,product.no product_no,user.no user_no,sharing.no sharing_no from
+		((oderform left join user on oderform.user_id=user.id)
+		left join product on oderform.product_id=product.id)
+		left join sharing on oderform.sharing_id=sharing.id
+		 where oderform.no=#{no};
+	</select>
+	<select id="selectByUser_d" resultMap="oderform">
+		select *,product.no product_no,product.price product_price,product.name product_name,product.photo product_photo,
+		user.no user_no,sharing.no sharing_no,sharing.discount sharing_discount,sharing.uleft sharing_uleft from
+		((oderform left join user on oderform.user_id=user.id)
+		left join product on oderform.product_id=product.id)
+		left join sharing on oderform.sharing_id=sharing.id
+		where oderform.user_id=#{user_id};
+	</select>
+	<delete id="delete">
+		delete from oderform where id=#{id};
+	</delete>
+	<insert id="insert">
+		insert into
+		oderform(no,date,quantity,total,photo,product_id,status,user_id,sharing_id)
+		values(#{oderform.no},#{oderform.date},#{oderform.quantity},#{oderform.total},#{oderform.photo},
+		#{oderform.product.id},#{oderform.status},#{oderform.user.id},#{oderform.sharing.id});
+	</insert>
+	<update id="update">
+		update oderform set
+		no=#{oderform.no},date=#{oderform.date},quantity=#{oderform.quantity},total=#{oderform.total},photo=#{oderform.photo},
+		product_id=#{oderform.product.id},status=#{oderform.status},user_id=#{oderform.user.id},sharing_id=#{oderform.sharing.id}
+		where id=#{oderform.id};
+	</update>
+</mapper>

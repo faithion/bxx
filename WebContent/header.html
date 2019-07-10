@@ -1,0 +1,306 @@
+<html>
+
+<head>
+<meta charset="utf-8">
+<script>
+	function s() {
+		$("#login-box").css({
+			visibility : "visible"
+		});
+	}
+
+	function s2() {
+		$("#register-box").css({
+			visibility : "visible"
+		});
+	}
+
+	function c() {
+		$("#login-box").css({
+			visibility : "hidden"
+		});
+	}
+
+	function c2() {
+		$("#register-box").css({
+			visibility : "hidden"
+		});
+	}
+
+	function login() {
+		var no = $("#userno").val();
+		var pw = $("#userpassword").val();
+		var mydata = {
+			"no" : no,
+			"password" : pw,
+		}
+		$.ajax({
+			url : "/bxx/login.do",
+			type : "post",
+			traditional : true,
+			data : mydata,
+			async: false,
+			success : function(result) {
+				if(result==""){
+					alert("账号或密码错误!")
+					return
+				}
+				$("#login").removeAttr("onclick");
+				$("#login").html(JSON.parse(result).name);
+				$("#login").attr("href","/bxx/self.jsp")
+				alert("登录成功!");
+			},
+			error : function() {
+				alert("登录失败!")
+			}
+		})
+		c();
+	}
+	
+	function check() {
+		console.log($("#signpassword").val())
+		if($("#signname").val()==""){
+			$("#tips").html("账户名不能为空");
+			return false;
+		}
+		if($("#signno").val()==""){
+			$("#tips").html("账号不能为空");
+			return false;
+		}
+		checkDuplicate()
+		if($("#tips").html()=="账号重复!"){
+			return false;
+		}
+		if ($("#signpassword").val()=="") {
+			$("#tips").html("密码不能为空");
+			return false;
+		}
+		if ($("#signpassword").val() != $("#signpassword2").val()) {
+			$("#tips").html("密码不一致");
+			return false;
+		}
+		$("#tips").html("可以注册!");
+		return true;
+	}
+	
+	function checkDuplicate(){
+		mydata={
+			"no":$("#signno").val()
+		}
+		$.ajax({
+			url : "/bxx/checkDuplicate.do",
+			type : "get",
+			data : mydata,
+			async: false,
+			success : function(result) {
+				if(result==""){
+					$("#tips").html("账号重复!");
+				}else{
+					$("#tips").html("账号可用");
+				}
+			},
+		})
+	}
+	function register() {
+		if(!check()){
+			return
+		}
+		var no = $("#signno").val();
+		var pw = $("#signpassword").val();
+		var name=$("#signname").val();
+		var mydata = {
+			"no" : no,
+			"password" : pw,
+			"name" : name,
+		}
+		console.log(mydata)
+		$.ajax({
+			url : "/bxx/register.do",
+			type : "post",
+			traditional : true,
+			data : mydata,
+			async: false,
+			success : function(result) {
+				alert("注册成功!");
+			},
+			error : function() {
+				alert("注册失败!")
+			}
+		})
+		c2();
+	}
+	function getUser(){
+		$.ajax({
+			url : "/bxx/getUserInfo.do",
+			success : function(result) {
+				if(result==""){
+					return
+				}
+				$("#login").removeAttr("onclick");
+				$("#login").attr("href","/bxx/self.jsp")
+				$("#login").html(JSON.parse(result).name);
+			},
+		})
+	}
+	function self(){
+		if($("#login").html()=="登录"){
+			alert("请登录!");
+		}else{
+			document.getElementById("login").click();
+		}
+	}
+	function logout(){
+		if($("#login").html()=="登录"){
+			alert("未登录!");
+			return;
+		}
+		$.get("/bxx/logout.do", function() {
+			alert("退出成功")
+			$("#header").load("header.html")
+		})
+	}
+</script>
+<style>
+body {
+	margin: 0;
+}
+
+.nav {
+	background-color: plum;
+	padding: 8px 100px;
+	font-size: 12px;
+}
+
+.nav a {
+	margin: 0 12px;
+	text-decoration: none;
+	color: black;
+}
+
+.nav a:hover {
+	color: crimson;
+}
+
+.clear {
+	clear: both;
+}
+
+#login-box {
+	visibility: hidden;
+	top: 100px;
+	z-index: 99999;
+	position: fixed;
+	margin: auto;
+	right: 0;
+	left: 0;
+	width: 350px;
+	height: 400px;
+	background-color: #f7f7f7;
+}
+
+.sign {
+	border: solid 1px gray;
+	font-size: 14px;
+	margin: 14px auto;
+	width: 80%;
+	height: 35px;
+	padding: 5px;
+	display: block;
+}
+
+.cb {
+	margin-left: 10%;
+}
+
+.login {
+	font-size: 16px;
+	color: white;
+	width: 80%;
+	display: block;
+	margin: 10px auto;
+	background-color: aqua;
+	border: none;
+	height: 40px;
+}
+
+.login:hover {
+	cursor: pointer;
+}
+
+.close-btn {
+	float: right;
+	margin: 8px;
+	text-decoration: none;
+	color: gray;
+}
+
+.close-btn:hover {
+	color: black;
+}
+
+.left {
+	float: left;
+}
+
+.right {
+	float: right;
+}
+
+#register-box {
+	visibility: hidden;
+	top: 100px;
+	z-index: 99990;
+	position: fixed;
+	margin: auto;
+	right: 0;
+	left: 0;
+	width: 350px;
+	height: 400px;
+	background-color: #f7f7f7;
+}
+#tips{
+	font-size: 10px;
+	color:red;
+	margin-left:35px;
+}
+</style>
+</head>
+
+<body>
+<script type="text/javascript">getUser()</script>
+	<div id="login-box">
+		<div style="height: 80px; text-align: center; padding: 0px">
+			<a class="close-btn" href="#" id="cbtn" onclick="c()">X</a>
+		</div>
+		<input id="userno" type="text" class="sign" placeholder="账户名"
+			maxlength="11"> <input id="userpassword" type="password"
+			class="sign" placeholder="密码" maxlength="11">
+		<div style="clear: both"></div>
+		<input type="checkbox" class="cb"><label
+			style="font-size: 12px; bottom: 5px; margin-left: 10px">下次自动登录</label>
+		<button class="login" onclick="login()">登录</button>
+	</div>
+	<div id="register-box">
+		<div style="height: 80px; text-align: center; padding: 0px">
+			<a class="close-btn" href="#" id="cbtn" onclick="c2()">X</a>
+		</div>
+		<input id="signname" type="text" class="sign" placeholder="请输入账户名" maxlength="11" onblur="check()"> 
+		<input id="signno" type="text" class="sign" placeholder="请输入账号" maxlength="11" onblur="check()">
+		<input id="signpassword" type="password" class="sign" placeholder="请输入密码" maxlength="11" onblur="check()"> 
+		<input id="signpassword2" type="password" class="sign" placeholder="确认密码" maxlength="11" onblur="check()">
+		<div>
+			<span id="tips">&nbsp</span><input id="dup" type="hidden" value="xxx">
+		</div>
+		<button class="login" onclick="register()" name="login">注册</button>
+	</div>
+	<div class="nav">
+		<a class="left" href="/bxx/index.do">欢迎来到并夕夕</a> <a class="left" href="#" id="login"
+			onclick="s()">登录</a> <a class="left" href="#" onclick="s2()">注册</a> <a
+			class="right" href="#" onclick="self()">个人中心</a>
+			 <a class="right" href="realthing.html">帮助</a>
+			<a class="right" href="#" onclick="logout()">退出</a>
+		<div class="clear"></div>
+	</div>
+</body>
+
+</html>

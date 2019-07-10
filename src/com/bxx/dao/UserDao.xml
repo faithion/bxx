@@ -1,0 +1,62 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bxx.dao.UserDao">
+
+	<select id="selectAll" resultType="com.bxx.bean.User">
+		select * from user;
+	</select>
+	<resultMap type="com.bxx.bean.User" id="user">
+		<id column="id" property="id"></id>
+		<result column="no" property="no"></result>
+		<result column="name" property="name"></result>
+		<result column="password" property="password"></result>
+		<result column="contact" property="contact"></result>
+		<result column="address" property="address"></result>
+		<collection property="sharings" ofType="com.bxx.bean.Sharing">
+			<result column="sharing_id" property="id"></result>
+			<result column="sno" property="no"></result>
+		</collection>
+		<collection property="oderforms" ofType="com.bxx.bean.Oderform">
+			<result column="oderform_id" property="id"></result>
+			<result column="ono" property="no"></result>
+		</collection>
+	</resultMap>
+	<select id="selectById" resultMap="user">
+		select *,sharing.no
+		sno,oderform.no ono from
+		((user left join user_sharing
+		on
+		user.id=user_sharing.user_id) left join sharing on
+		user_sharing.sharing_id=sharing.id) left join oderform
+		on
+		oderform.user_id=user.id where
+		user.id=#{id};
+	</select>
+	<select id="selectByNo" resultMap="user">
+		select *,sharing.no
+		sno,oderform.no ono from
+		((user left join user_sharing
+		on
+		user.id=user_sharing.user_id) left join sharing on
+		user_sharing.sharing_id=sharing.id) left join oderform
+		on
+		oderform.user_id=user.id where
+		user.no=#{no};
+	</select>
+	<delete id="delete">
+		delete from user where id=#{id};
+	</delete>
+	<insert id="insert">
+		insert into
+		user(no,name,password,contact,address)
+		values(#{user.no},#{user.name},#{user.password},#{user.contact},#{user.address});
+	</insert>
+	<update id="update">
+		update user set
+		no=#{user.no},name=#{user.name},password=#{user.password},contact=#{user.contact},address=#{user.address}
+		where id=#{user.id};
+	</update>
+</mapper>

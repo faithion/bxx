@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    
+<mapper namespace="com.bxx.dao.CommentDao">
+
+	<select id="selectAll" resultType="com.bxx.bean.Comment">
+		select * from comment;
+	</select>
+	<resultMap type="com.bxx.bean.Comment" id="comment">
+		<id column="id" property="id"></id>
+		<result column="no" property="no"></result>	
+		<result column="time" property="time"/>
+		<result column="text" property="text"></result>
+		<association property="product" javaType="com.bxx.bean.Product">
+			<id column="product_id" property="id"></id>
+			<result column="product_no" property="no"></result>
+			<result column="product_name" property="name"/>
+			<result column="product_sales" property="sales"/>
+			<result column="product_price" property="price"/>
+			<result column="product_photo" property="photo"/>
+		</association>
+		<association property="user" javaType="com.bxx.bean.User">
+			<id column="user_id" property="id"></id>
+			<result column="user_id" property="id"></result>
+		</association>
+	</resultMap>
+	<select id="selectById" resultMap="comment">
+		select *,product.no product_no,user.no user_no from
+		(comment left join product on comment.product_id=product.id)
+		left join user on comment.user_id=user.id
+		where  comment.id=#{id};
+	</select>
+	<select id="selectByNo" resultMap="comment">
+		select comment.*,product.no product_no,user.no user_no from
+		(comment left join product on comment.product_id=product.id)
+		left join user on comment.user_id=user.id
+		where comment.no=#{no};
+	</select>
+	<select id="selectByP_Id" resultMap="comment">
+		select *,product.no product_no,user.no user_no from 
+		(comment left join product on comment.product_id=product.id)
+		left join user on comment.user_id=user.id
+		where comment.product_id=#{product_id};
+	</select>
+	<select id="selectByP_id_U_id" resultMap="comment">
+		select *,product.name product_name,product.price product_price,product.sales product_sales,product.photo product_photo,user.no user_no from 
+		(comment left join product on comment.product_id=product.id)
+		left join user on comment.user_id=user.id
+		where comment.product_id=#{product_id} and comment.user_id=#{user_id};
+	</select>
+	<delete id="delete">
+		delete from comment where id=#{id};
+	</delete>
+	<insert id="insert">
+		insert into
+		comment(no,time,product_id,user_id,text)
+		values(#{no},#{time},#{product_id},#{user_id},#{text});
+		
+	</insert>
+	<update id="updateStatus">
+		update oderform set
+		status="已评价" where oderform.product_id=#{product_id};
+	</update>
+	<update id="update">
+		update comment set
+		no=#{no},time=#{time},product_id=#{product_id},comment.user_id=#{user_id},text=#{text}
+		where id=#{id};
+	</update>
+</mapper>

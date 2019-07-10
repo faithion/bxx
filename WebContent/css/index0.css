@@ -1,0 +1,221 @@
+body {
+	margin: 0;
+}
+
+.nav {
+	background-color: plum;
+	padding: 8px 100px;
+	font-size: 12px;
+}
+
+.nav a {
+	margin: 0 12px;
+	text-decoration: none;
+	color: black;
+}
+
+.nav a:hover {
+	color: crimson;
+}
+
+.right {
+	float: right;
+}
+
+.left {
+	float: left;
+}
+
+.clear {
+	clear: both;
+}
+
+.kinds {
+	width: 20%;
+	height: 400px;
+	/* background-color: bisque; */
+}
+
+.content {
+	width: 70%;
+	height: 400px;
+}
+
+.search {
+	height: 150px;
+	width: 70%;
+	background-color: white;
+}
+
+.logo {
+	height: 100px;
+	width: 15%;
+}
+
+.st {
+	width: 376px;
+	height: 46px;
+	padding: 3px;
+	font-size: 15px;
+	border: solid 2px plum;
+}
+
+.sb {
+	height: 46px;
+	width: 70px;
+	background-color: plum;
+	border: none;
+	font-size: 17px;
+	border: solid 2px plum;
+}
+
+.leftnav {
+	margin: 0;
+	padding: 0;
+	list-style-type: none;
+	background-color: #888;
+	width: 150px;
+	text-align: center;
+}
+
+.leftnav a {
+	text-decoration: none;
+	margin: 5px;
+	color: white;
+}
+
+.leftnav span {
+	color: white;
+}
+
+.leftnav li {
+	margin: 2px 0;
+	padding: 6px 0;
+	width: 100%;
+	position: relative;
+}
+
+.dropdown-content {
+	width: 300px;
+	display: none;
+	position: absolute;
+	background-color: #f9f9f9;
+	min-width: 160px;
+	left: 100%;
+	top: -1px;
+	box-shadow: 0px 8px 16px 0px rgba(0, 0, 0, 0.2);
+	padding: 12px 16px;
+	float: right;
+}
+
+.leftnav li:hover .dropdown-content {
+	display: block;
+}
+
+.leftnav li:hover {
+	color: pink;
+	background-color: plum;
+}
+
+.products {
+	padding: 0 10%;
+}
+
+/* .products img { */
+/*     width: 100%; */
+/* } */
+.product {
+	width: 200px;
+	height: 350px;
+	text-decoration: none;
+	text-align: center;
+	color: black;
+	padding: 10px;
+	border: 1px solid white;
+	margin:15px;
+	position:relative;
+}
+
+.product:hover {
+	border: 1px solid red;
+	text-decoration: none;
+}
+
+.pimg {
+	width:180px;
+	height:180px;
+}
+
+.pname {
+	margin: 10px;
+/* 	width: 360px; */
+	overflow:hidden;
+/* 	white-space: nowrap; */
+	text-overflow: ellipsis;
+}
+
+.dollar {
+	color: red;
+	position:absolute;
+	margin:0;
+	left:0;
+	right:0;
+	bottom:0px;
+}
+
+#searchbtn {
+	color: white;
+}
+
+#searchbtn:hover {
+	cursor: pointer;
+}
+
+.navbar {
+	text-align: center;
+	padding: 0;
+	position: fixed;
+	bottom: 0px;
+	left: 0px;
+}
+
+.navbar ul {
+	padding: 0;
+}
+
+.navbar li {
+	width: 50px;
+	height: 50px;
+	background-color: plum;
+	list-style-type: none;
+	margin: 10px;
+	border-radius: 100px;
+	padding: 10px;
+	border: #F7F7F7 solid 2px;
+}
+
+.navbar li:hover {
+	border: plum solid 2px;
+}
+
+.left-margin {
+	padding: 0 10%;
+}
+
+.container {
+	display: block;
+	max-width: 1080px;
+	margin: auto;
+}
+
+.col-2 {
+	display: block;
+	position: relative;
+	min-height: 1px;
+	float: left;
+	width: 20%;
+}
+.top4{
+	width:95%;
+	margin:auto;	
+}

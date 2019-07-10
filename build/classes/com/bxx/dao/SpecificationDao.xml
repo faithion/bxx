@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+   
+<mapper namespace="com.bxx.dao.SpecificationDao">
+
+	<select id="selectAll" resultType="com.bxx.bean.Specification">
+		select * from specification;
+	</select> 
+	<resultMap type="com.bxx.bean.Specification" id="specification">
+		<id column="id" property="id"></id>
+		<result column="no" property="no"></result>
+		<result column="cailiao" property="cailiao"></result>
+		<result column="guige" property="guige"></result>
+		<result column="color" property="color"></result>	
+		<result column="pinpai" property="pinpai"></result>
+		<result column="shiheage" property="shiheage"></result>
+		<result column="producer" property="producer"></result>
+		<result column="shelf_life" property="shelf_life"></result>
+		<result column="shangshitime" property="shangshitime"></result>
+		<result column="weight" property="weight"></result>
+		<result column="gongneng" property="gongneng"></result>
+		<result column="others" property="others"></result>
+		<association property="product" javaType="com.bxx.bean.Product">
+			<result column="product_id" property="id"></result>
+			<result column="sno" property="no"></result>
+		</association>
+	</resultMap>
+	<select id="selectById" resultMap="specification">
+		select *,product.no sno from specification,product where specification.id=#{id};
+	</select>
+	<select id="selectByNo" resultMap="specification">
+		select *,product.no sno from specification,product where specification.no=#{no};
+	</select>
+	<delete id="delete">
+		delete from specification where id=#{id};
+	</delete>
+	<insert id="insert">
+		insert into specification(no,cailiao,guige,color,pinpai,product_id,shiheage,
+                     shangshitime,weight,producer,shelf_life,gongneng,others)
+		values(#{spe.no},#{spe.cailiao},#{spe.guige},#{spe.color},#{spe.pinpai}, 
+		 #{spe.shiheage}, #{spe.shangshitime}, #{spe.weight},
+		#{spe.producer}, #{spe.shelf_life},#{spe.product.id}, #{spe.gongneng},#{spe.others});
+	</insert>
+	<update id="update">
+		update specification set
+		no=#{spe.no},cailiao=#{spe.cailiao},guige=#{spe.guige},color=#{spe.color},weight=#{spe.weight},
+		producer=#{spe.producer},shelf_life=#{spe.shelf_life},pinpai=#{spe.pinpai},shiheage=#{spe.shiheage},shangshitime=#{spe.shangshitime},
+		product_id=#{spe.product.id},gongneng=#{spe.gongneng},others=#{spe.others} where id=#{spe.id};
+	</update>
+</mapper>

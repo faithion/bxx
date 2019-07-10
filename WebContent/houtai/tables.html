@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+  <title>库存管理</title>
+  <!-- <link rel="stylesheet" href="css/materialdesignicons.min.css"> -->
+  <link rel="stylesheet" href="css/style.css">
+
+</head>
+
+<body>
+  <div class="body-wrapper">
+     <aside class="mdc-persistent-drawer mdc-persistent-drawer--open">
+          <nav class="mdc-persistent-drawer__drawer">
+            <div class="mdc-persistent-drawer__toolbar-spacer" >
+              <a href="#" class="brand-logo">
+    						<img src="img/pdd.png" alt="logo">
+    					</a>
+            </div>
+            <div class="mdc-list-group">
+              <nav class="mdc-list mdc-drawer-menu">
+                <div class="mdc-list-item mdc-drawer-item">
+                  <a class="mdc-drawer-link" href="manager.html">
+                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">desktop_mac</i>
+                    商品信息管理
+                  </a>
+                </div>
+    
+            
+                <div class="mdc-list-item mdc-drawer-item">
+                  <a class="mdc-drawer-link" href="tables.html">
+                    <i class="material-icons mdc-list-item__start-detail mdc-drawer-item-icon" aria-hidden="true">grid_on</i>
+                    库存管理
+                  </a>
+                </div>
+       
+              </nav>
+            </div>
+          </nav>
+        </aside>
+				<!-- 页头 -->
+    <header >
+   
+    </header>
+
+    <div class="page-wrapper mdc-toolbar-fixed-adjust">
+      <main class="content-wrapper">
+        <div class="mdc-layout-grid">
+					<div class="mdc-layout-grid__inner">
+            <div class="mdc-layout-grid__cell stretch-card mdc-layout-grid__cell--span-12">
+							<div class="mdc-card">
+								<section class="mdc-card__primary">
+									<h1 class="mdc-card__title mdc-card__title--large">库存</h1>
+								</section>
+                <div class="template-demo">
+                  <table class="table">
+                    <thead>
+                      <tr>                       
+                        <th>id</th>
+                        <th>no</th>
+												<th class="text-left">name</th>
+                        <th>price</th>
+                        <th>size</th>
+                        <th>inventory</th>
+                        <th>action</th>                   
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>                       
+                        <td>1</td>
+                        <td>6.0</td>
+												<td class="text-left">Frozen yogurt</td>
+                        <td>50</td>
+                        <td>4.0</td>
+                        <td>87</td>
+                        <td><a href="#">修改库存</a></td>                       
+                      </tr>
+                      <tr>                        
+                        <td>2</td>
+                        <td>2.5</td>
+												<td class="text-left">Frozen yogurt</td>
+                        <td>35</td>
+                        <td>2.0</td>
+                        <td>97</td>
+                        <td><a href="#">修改库存</a></td>                       
+                      </tr>
+                      <tr>                       
+                        <td>3</td>
+                        <td>4.0</td>
+												<td class="text-left">Ice crean sandwich</td>
+                        <td>40</td>
+                        <td>8.0</td>
+                        <td>83</td>
+                        <td><a href="#">修改库存</a></td>                       
+                      </tr>
+                      <tr>                        
+                        <td>4</td>
+                        <td>3.0</td>
+												<td class="text-left">Eclair</td>
+                        <td>34</td>
+                        <td>6.0</td>
+                        <td>67</td>
+                        <td><a href="#">修改库存</a></td>                       
+                      </tr>                     
+                    </tbody>
+                  </table>
+                </div>
+							</div>
+						</div>
+            </div>
+						</div>
+      </main>
+			<!-- 页脚 -->
+      <footer>
+     
+      </footer>
+
+    </div>
+  </div>
+  
+  <script src="js/material-components-web.min.js"></script>
+  <script src="js/jquery.min.js"></script>
+
+	<script src="js/misc.js"></script>
+	<script src="js/material.js"></script>
+	
+</body>
+
+</html>

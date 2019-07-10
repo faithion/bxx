@@ -1,0 +1,68 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.bxx.dao.SharingDao">
+	<select id="selectAll" resultType="com.bxx.bean.Sharing">
+		select * from sharing;
+	</select>
+	<resultMap type="com.bxx.bean.Sharing" id="sharing">
+		<id column="id" property="id"></id>
+		<result column="no" property="no"></result>
+		<result column="unum" property="unum"></result>
+		<result column="uleft" property="uleft"></result>
+		<result column="discount" property="discount"></result>
+		<result column="time" property="time"></result>
+		<association property="product" javaType="com.bxx.bean.Product">
+			<result column="product_id" property="id"></result>
+			<result column="pno" property="no"></result>
+		</association>
+		<collection property="users" ofType="com.bxx.bean.User">
+			<id column="id" property="id"></id>
+			<result column="uno" property="no" />
+		</collection>
+		<collection property="oderforms" ofType="com.bxx.bean.Oderform">
+			<id column="oid" property="id"></id>
+			<result column="ono" property="no" />
+		</collection>
+	</resultMap>
+	<select id="selectById" resultMap="sharing">
+		select *,oderform.no
+		ono,oderform.id oid from
+		((sharing left
+		join product on
+		sharing.product_id=product.id) left join
+		user_sharing
+		on
+		user_sharing.sharing_id=sharing.id) left join oderform
+		on
+		oderform.sharing_id=sharing.id where sharing.id=#{id};
+	</select>
+	<select id="selectByNo" resultMap="sharing">
+		select *,oderform.no
+		ono,oderform.id oid from
+		((sharing left
+		join product on
+		sharing.product_id=product.id) left join
+		user_sharing
+		on
+		user_sharing.sharing_id=sharing.id) left join oderform
+		on
+		oderform.sharing_id=sharing.id where sharing.no=#{no};
+	</select>
+	<delete id="delete">
+		delete from sharing where id=#{id};
+	</delete>
+	<insert id="insert">
+		insert into
+		sharing(no,unum,uleft,discount,time,product_id)
+		values(#{sharing.no},#{sharing.unum},#{sharing.uleft},#{sharing.discount},#{sharing.time},#{sharing.product.id});
+	</insert>
+	<update id="update">
+		update sharing set
+		no=#{sharing.no},unum=#{sharing.unum},uleft=#{sharing.uleft},discount=#{sharing.discount},time=#{sharing.time},product_id=#{sharing.product.id}
+		where id=#{sharing.id};
+	</update>
+
+</mapper>
